@@ -1,18 +1,18 @@
-#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6
+#!/usr/bin/python3.6
 
-import sys
-
-#print(len(sys.argv))
+import sys, re
 
 def regexStrip(theList):
   if (len(theList)) == 2:
     string = theList[0]
     pattern = theList[1]
-    stripRegex = re.compile(r'^%s' % pattern)
-    stripRegex.search(string)
-    print(string)
-    print(pattern)
+    myregex = re.escape(pattern) + r"+"
+    result = re.search(myregex, string, re.IGNORECASE)
+    print(re.sub(myregex, '', string))
+  else:
+    print(re.sub('^\s+|\s+$', '', theList)) 
 
-
-myList = ['0000000this is string example....wow!!!0000000', '0']
-regexStrip(myList)
+myList1 = '       This is the string with space characters....wow!!!       '
+myList2 = ['000000This is the string with zeros on it....wow!!!0000000', '0']
+regexStrip(myList1)
+regexStrip(myList2)
